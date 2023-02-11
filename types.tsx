@@ -28,3 +28,15 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
 		BottomTabScreenProps<RootTabParamList, Screen>,
 		NativeStackScreenProps<RootStackParamList>
 	>;
+
+export type veganType = {
+	key: string;
+	name: string;
+	fruit: boolean;
+	veggies: boolean;
+	cereals: boolean;
+	dairy: boolean;
+	eggs: boolean;
+	seafood: boolean;
+	meat: boolean;
+};
