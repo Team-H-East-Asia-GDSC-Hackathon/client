@@ -33,7 +33,10 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
 	return (
-		<BottomTab.Navigator initialRouteName='Home'>
+		<BottomTab.Navigator
+			initialRouteName='Home'
+			screenOptions={{ headerShown: false }}
+		>
 			<BottomTab.Screen name='Home' component={HomeScreen} />
 			<BottomTab.Screen name='Search' component={SearchScreen} />
 		</BottomTab.Navigator>
