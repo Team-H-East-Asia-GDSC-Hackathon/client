@@ -44,14 +44,31 @@ export default function VeganTypeItem(props: {
 				props.setModalVisible(false);
 			}}
 		>
-			<Text
+			<View
 				style={{
-					color: Colors.Black,
-					fontSize: 16,
+					flexDirection: 'row',
+					justifyContent: 'space-between',
 				}}
 			>
-				{props.data.name}
-			</Text>
+				<Text
+					style={{
+						color: Colors.Black,
+						fontSize: 16,
+					}}
+				>
+					{props.data.name}
+				</Text>
+				{props.veganTypeTemp.name === props.data.name ? (
+					<Text
+						style={{
+							color: Colors.Green01,
+							fontSize: 16,
+						}}
+					>
+						My
+					</Text>
+				) : undefined}
+			</View>
 			<View
 				style={{
 					width: Dimensions.width * 150,

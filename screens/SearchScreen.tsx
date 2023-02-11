@@ -9,6 +9,8 @@ import RightArrow from '../assets/right-arrow.svg';
 import { useState } from 'react';
 import { veganTypes } from '../data/veganTypes';
 import VeganTypeItem from '../components/VeganTypeItem';
+import Tag from '../components/Tag';
+import MenuItem from '../components/MenuItem';
 export default function SearchScreen({
 	navigation,
 }: RootTabScreenProps<'Search'>) {
@@ -130,6 +132,7 @@ export default function SearchScreen({
 					>
 						Vegan Recipies
 					</Text>
+					<MenuItem />
 				</View>
 			</View>
 		</>
