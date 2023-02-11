@@ -236,6 +236,7 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
 						justifyContent: 'center',
 						alignItems: 'center',
 					})}
+					onPress={()=>setModalVisible(true)}
 				>
 					<Add />
 				</Pressable>
