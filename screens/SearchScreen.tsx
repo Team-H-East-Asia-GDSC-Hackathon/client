@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { View, Text, Pressable, Modal } from 'react-native';
-import { RootTabScreenProps } from '../types';
+import { View, Text, Pressable, Modal, FlatList } from 'react-native';
+import { menu, RootTabScreenProps, veganType } from '../types';
 import Dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -11,6 +11,7 @@ import { veganTypes } from '../data/veganTypes';
 import VeganTypeItem from '../components/VeganTypeItem';
 import Tag from '../components/Tag';
 import MenuItem from '../components/MenuItem';
+import { menus } from '../data/menus';
 export default function SearchScreen({
 	navigation,
 }: RootTabScreenProps<'Search'>) {
@@ -26,15 +27,31 @@ export default function SearchScreen({
 		meat: false,
 	});
 	const [modalVisible, setModalVisible] = useState(false);
+	function filterMenusByVeganType(
+		menus: menu[],
+		selectedVeganType: veganType,
+	): Array<menu> {
+		let excludedIngredients: string[] = [];
+		for (let i = 0; i < 9; i++) {
+			excludedIngredients.push(
+				Object.keys(selectedVeganType).find(
+					(key) => selectedVeganType[key] === false,
+				),
+			);
+		}
+		console.log(excludedIngredients);
+		return menus.filter((menu) =>
+			excludedIngredients.forEach((ingredient) => menu[ingredient] === true),
+		);
+	}
 	return (
 		<>
-			<Modal animationType='fade' transparent={true} visible={modalVisible}>
+			<Modal animationType='fade' visible={modalVisible}>
 				<View
 					style={{
 						backgroundColor: 'white',
 						width: Dimensions.width * 375,
 						height: Dimensions.height * 812,
-
 						paddingTop: useSafeAreaInsets().top,
 						paddingBottom: useSafeAreaInsets().bottom,
 					}}
@@ -132,7 +149,18 @@ export default function SearchScreen({
 					>
 						Vegan Recipies
 					</Text>
-					<MenuItem />
+					<FlatList
+						renderItem={(item) => (
+							<MenuItem
+								key={item.item.name}
+								name={item.item.name}
+								ingredients={item.item.ingredients}
+								date={item.item.date}
+								time={item.item.time}
+							/>
+						)}
+						data={filterMenusByVeganType(menus, veganType)}
+					/>
 				</View>
 			</View>
 		</>

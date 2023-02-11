@@ -40,3 +40,24 @@ export type veganType = {
 	seafood: boolean;
 	meat: boolean;
 };
+
+export type menu = {
+	key: string;
+	name: string;
+	ingredients: Array<ingredient>;
+	date: Date;
+	time: 'breakfast' | 'launch' | 'dinner';
+};
+
+export type ingredient = {
+	key: string;
+	name: string;
+	category:
+		| 'fruit'
+		| 'veggies'
+		| 'cereals'
+		| 'dairy'
+		| 'eggs'
+		| 'seafood'
+		| 'meat';
+};

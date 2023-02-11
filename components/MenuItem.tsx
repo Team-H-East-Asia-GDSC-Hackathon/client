@@ -1,12 +1,13 @@
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import Colors from '../constants/Colors';
 import Dimensions from '../constants/Dimensions';
+import { menu } from '../types';
 import Tag from './Tag';
 
-export default function MenuItem() {
+export default function MenuItem(props: menu) {
 	return (
 		<>
-			<View
+			<Image
 				style={{
 					width: Dimensions.width * 343,
 					height: Dimensions.height * 158,
@@ -15,7 +16,8 @@ export default function MenuItem() {
 					backgroundColor: 'gray',
 					marginTop: Dimensions.height * 20,
 				}}
-			></View>
+				source={require('../assets/sample-menu-1.png')}
+			/>
 			<View
 				style={{
 					width: Dimensions.width * 343,
