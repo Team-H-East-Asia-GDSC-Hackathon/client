@@ -6,12 +6,16 @@ import {
 	Modal,
 	TextInput,
 	StyleSheet,
+	Image,
+	ScrollView,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Colors from '../constants/Colors';
 import Dimensions from '../constants/Dimensions';
-import { RootTabScreenProps } from '../types';
-
+import { ingredient, RootTabScreenProps } from '../types';
+import Remove from '../assets/remove.svg';
+import AddIngredient from '../assets/add-ingredient.svg';
+import Done from '../assets/done.svg';
 import {
 	WeekCalendar,
 	Calendar,
@@ -28,11 +32,30 @@ import Tag from '../components/Tag';
 import { useState } from 'react';
 import MenuItem from '../components/MenuItem';
 import { menus } from '../data/menus';
+import ToggleSwitch from 'toggle-switch-react-native';
 export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [img, setImageSource] = useState('');
-
+	const [menuName, setMenuName] = useState('');
+	const [toggleOn, setToggleOn] = useState(false);
 	const openPicker = () => {};
+	const [ingredients, setIngredients] = useState<ingredient[]>([
+		{
+			key: 'Egg',
+			name: 'Egg',
+			category: 'eggs',
+		},
+		{
+			key: 'Toast',
+			name: 'Toast',
+			category: 'cereals',
+		},
+		{
+			key: 'Rucola',
+			name: 'Rucola',
+			category: 'veggies',
+		},
+	]);
 	return (
 		<>
 			<Modal animationType='fade' visible={modalVisible}>
@@ -63,88 +86,142 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
 							<LeftArrow />
 						</Pressable>
 					</View>
-					<View
-						style={{
-							marginVertical: Dimensions.height * 21,
-							marginHorizontal: Dimensions.width * 16,
-							width: Dimensions.width * 341,
-							height: Dimensions.height * 305,
-							backgroundColor: 'gray',
-							alignItems: 'center',
-							alignContent: 'center',
-						}}
-					>
-						<Pressable
-							style={({ pressed }) => ({
-								opacity: pressed ? 0 : 0,
-								width: Dimensions.width * 52,
-								height: Dimensions.width * 52,
-								borderRadius: Dimensions.width * 52,
+					<ScrollView>
+						<Image
+							style={{
+								marginVertical: Dimensions.height * 21,
+								marginHorizontal: Dimensions.width * 16,
+								width: Dimensions.width * 341,
+								height: Dimensions.height * 305,
+							}}
+							source={require('../assets/food-image-4.png')}
+						/>
 
-								justifyContent: 'center',
-								alignItems: 'center',
-							})}
-							onPress={() => setModalVisible(true)}
+						<Text
+							style={{
+								color: Colors.Black,
+								fontSize: 18,
+								marginHorizontal: Dimensions.width * 16,
+								marginBottom: Dimensions.height * 12,
+							}}
 						>
-							<Add />
-						</Pressable>
-					</View>
-					<Text
+							Menu
+						</Text>
+						<TextInput
+							style={{
+								borderRadius: 6,
+								marginHorizontal: Dimensions.width * 16,
+								paddingHorizontal: Dimensions.width * 16,
+								marginBottom: Dimensions.height * 42,
+								width: Dimensions.width * 343,
+								height: Dimensions.height * 50,
+								borderWidth: 1,
+								borderColor: '#E1E1E1',
+							}}
+							placeholder={'Enter the name of the menu'}
+							value={menuName}
+							onChangeText={(text) => setMenuName(text)}
+						/>
+						<Text
+							style={{
+								color: Colors.Black,
+								fontSize: 18,
+								marginHorizontal: Dimensions.width * 16,
+								marginBottom: Dimensions.height * 12,
+							}}
+						>
+							Ingredients
+						</Text>
+						{ingredients.map((ingredient) => (
+							<TextInput
+								style={{
+									borderRadius: 6,
+									marginHorizontal: Dimensions.width * 16,
+									paddingHorizontal: Dimensions.width * 16,
+									marginBottom: Dimensions.height * 16,
+									width: Dimensions.width * 343,
+									height: Dimensions.height * 50,
+									borderWidth: 1,
+									borderColor: '#E1E1E1',
+								}}
+								value={ingredient.name}
+								editable={false}
+							/>
+						))}
+						<TextInput
+							style={{
+								borderRadius: 6,
+								marginHorizontal: Dimensions.width * 16,
+								paddingHorizontal: Dimensions.width * 4,
+								marginBottom: Dimensions.height * 42,
+								width: Dimensions.width * 343,
+								height: Dimensions.height * 50,
+								borderWidth: 1,
+								borderColor: '#E1E1E1',
+							}}
+							placeholder={'Add more ingredients'}
+						/>
+						<View
+							style={{
+								flexDirection: 'row',
+								justifyContent: 'space-between',
+								alignItems: 'center',
+								paddingHorizontal: Dimensions.width * 16,
+							}}
+						>
+							<Text
+								style={{
+									color: Colors.Black,
+									fontSize: 18,
+
+									marginBottom: Dimensions.height * 12,
+								}}
+							>
+								Food Recpie
+							</Text>
+							<ToggleSwitch
+								isOn={toggleOn}
+								onToggle={(isOn) => setToggleOn(isOn)}
+								onColor={Colors.Green01}
+							/>
+						</View>
+						{toggleOn ? (
+							<TextInput
+								style={{
+									borderRadius: 6,
+									marginHorizontal: Dimensions.width * 16,
+									paddingHorizontal: Dimensions.width * 4,
+									marginBottom: Dimensions.height * 42,
+									width: Dimensions.width * 343,
+									height: Dimensions.height * 50,
+									borderWidth: 1,
+									borderColor: '#E1E1E1',
+								}}
+								placeholder={'Enter your recipe'}
+								multiline={true}
+							/>
+						) : undefined}
+					</ScrollView>
+					<Pressable
 						style={{
-							color: Colors.Black,
-							fontSize: 18,
-							marginHorizontal: Dimensions.width * 16,
-							marginBottom: Dimensions.height * 12,
+							alignSelf: 'center',
+							width: Dimensions.width * 343,
+							height: Dimensions.height * 50,
+							backgroundColor: menuName !== '' ? Colors.Green01 : '#BCBCBC',
+							justifyContent: 'center',
+							alignItems: 'center',
+							borderRadius: 6,
 						}}
 					>
-						Menu
-					</Text>
-					<TextInput
-						style={{
-							borderRadius: 6,
-							marginHorizontal: Dimensions.width * 16,
-							paddingHorizontal: Dimensions.width * 16,
-							marginBottom: Dimensions.height * 42,
-							width: Dimensions.width * 343,
-							height: Dimensions.height * 50,
-							borderWidth: 1,
-							borderColor: '#E1E1E1',
-						}}
-					/>
-					<Text
-						style={{
-							color: Colors.Black,
-							fontSize: 18,
-							marginHorizontal: Dimensions.width * 16,
-							marginBottom: Dimensions.height * 12,
-						}}
-					>
-						Ingredints
-					</Text>
-					<TextInput
-						style={{
-							borderRadius: 6,
-							marginHorizontal: Dimensions.width * 16,
-							paddingHorizontal: Dimensions.width * 16,
-							marginBottom: Dimensions.height * 16,
-							width: Dimensions.width * 343,
-							height: Dimensions.height * 50,
-							borderWidth: 1,
-							borderColor: '#E1E1E1',
-						}}
-					/>
-					<TextInput
-						style={{
-							borderRadius: 6,
-							marginHorizontal: Dimensions.width * 16,
-							paddingHorizontal: Dimensions.width * 4,
-							marginBottom: Dimensions.height * 42,
-							width: Dimensions.width * 343,
-							height: Dimensions.height * 50,
-							borderWidth: 1,
-							borderColor: '#E1E1E1',
-						}}
-					/>
+						<Text
+							style={{
+								color: 'white',
+								fontSize: 16,
+							}}
+						>
+							Done
+						</Text>
+					</Pressable>
 				</View>
 			</Modal>
 			<View
