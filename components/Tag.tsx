@@ -7,11 +7,12 @@ export default function Tag(props: { name: string }) {
 		<View
 			style={{
 				backgroundColor: Colors.Green04,
-				width: Dimensions.width * 48,
+				paddingHorizontal: Dimensions.width * 5,
 				height: Dimensions.height * 25,
 				justifyContent: 'center',
 				alignItems: 'center',
 				borderRadius: 2,
+				marginRight: Dimensions.width * 15,
 			}}
 		>
 			<Text

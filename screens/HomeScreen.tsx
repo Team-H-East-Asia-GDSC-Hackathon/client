@@ -1,26 +1,38 @@
 import * as React from 'react';
-import { View, Text, Pressable, Modal, TextInput, StyleSheet } from 'react-native';
+import {
+	View,
+	Text,
+	Pressable,
+	Modal,
+	TextInput,
+	StyleSheet,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Colors from '../constants/Colors';
 import Dimensions from '../constants/Dimensions';
 import { RootTabScreenProps } from '../types';
 
-import { WeekCalendar, Calendar, CalendarProvider, ExpandableCalendar } from 'react-native-calendars';
-import { Shadow } from 'react-native-shadow-2'
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
+import {
+	WeekCalendar,
+	Calendar,
+	CalendarProvider,
+	ExpandableCalendar,
+} from 'react-native-calendars';
+import { Shadow } from 'react-native-shadow-2';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
 import LeftArrow from '../assets/left-arrow.svg';
 import RightArrow from '../assets/right-arrow.svg';
 import Add from '../assets/add.svg';
 import Tag from '../components/Tag';
 import { useState } from 'react';
+import MenuItem from '../components/MenuItem';
+import { menus } from '../data/menus';
 export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
 	const [modalVisible, setModalVisible] = useState(false);
-	const [img, setImageSource] = useState("") 
+	const [img, setImageSource] = useState('');
 
-	const openPicker = () => {
-
-	}
+	const openPicker = () => {};
 	return (
 		<>
 			<Modal animationType='fade' visible={modalVisible}>
@@ -37,7 +49,7 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
 						style={{
 							width: Dimensions.width * 375,
 							height: Dimensions.height * 52,
-							
+
 							paddingLeft: Dimensions.width * 9,
 							justifyContent: 'center',
 						}}
@@ -52,28 +64,28 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
 						</Pressable>
 					</View>
 					<View
-					style={{
-						marginVertical: Dimensions.height * 21,
-						marginHorizontal: Dimensions.width * 16,
-						width: Dimensions.width * 341,
-						height: Dimensions.height * 305,
-						backgroundColor: "gray",
-						alignItems: "center",
-						alignContent: "center"
-						
-					}}>
-						<Pressable
-						style={({ pressed }) => ({
-
-							opacity: pressed ? 0 : 0,
-							width: Dimensions.width * 52,
-							height: Dimensions.width * 52,
-							borderRadius: Dimensions.width * 52,
-
-							justifyContent: 'center',
+						style={{
+							marginVertical: Dimensions.height * 21,
+							marginHorizontal: Dimensions.width * 16,
+							width: Dimensions.width * 341,
+							height: Dimensions.height * 305,
+							backgroundColor: 'gray',
 							alignItems: 'center',
-						})}
-						onPress={() => setModalVisible(true)}>
+							alignContent: 'center',
+						}}
+					>
+						<Pressable
+							style={({ pressed }) => ({
+								opacity: pressed ? 0 : 0,
+								width: Dimensions.width * 52,
+								height: Dimensions.width * 52,
+								borderRadius: Dimensions.width * 52,
+
+								justifyContent: 'center',
+								alignItems: 'center',
+							})}
+							onPress={() => setModalVisible(true)}
+						>
 							<Add />
 						</Pressable>
 					</View>
@@ -140,29 +152,24 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
 					backgroundColor: 'white',
 					width: Dimensions.width * 375,
 					height: Dimensions.height * 812,
-					//paddingHorizontal: Dimensions.width * 16,
 					paddingTop: useSafeAreaInsets().top,
 					paddingBottom: useSafeAreaInsets().bottom,
-
 				}}
 			>
 				<View
 					style={{
 						backgroundColor: Colors.NavBar,
 						width: Dimensions.width * 375,
-						height: Dimensions.height * 72
+						height: Dimensions.height * 72,
 						//height: Dimensions.height * 72
-					}}>
-					<CalendarProvider date={'2023-02-11'} >
-
+					}}
+				>
+					<CalendarProvider date={'2023-02-11'}>
 						<WeekCalendar
-
 							theme={{
-								selectedDayBackgroundColor: "white",
-								selectedDayTextColor: "black"
-
+								selectedDayBackgroundColor: 'white',
+								selectedDayTextColor: 'black',
 							}}
-
 							markedDates={{
 								'2023-02-06': { selected: true, selectedColor: Colors.Green03 },
 								'2023-02-07': { selected: true, selectedColor: Colors.Green01 },
@@ -175,7 +182,8 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
 								'2023-02-17': { selected: true, selectedColor: Colors.Green01 },
 								//'2023-02-08': {marked: true, dotColor: 'red'},
 								//'2023-02-09': {disabled: true, disableTouchEvent: true}
-							}} />
+							}}
+						/>
 					</CalendarProvider>
 				</View>
 				<View
@@ -183,10 +191,9 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
 						width: Dimensions.width * 375,
 						//height: Dimensions.height * 72,
 						paddingHorizontal: Dimensions.width * 16,
-						paddingBottom: useSafeAreaInsets().bottom
-					}}>
-
-
+						paddingBottom: useSafeAreaInsets().bottom,
+					}}
+				>
 					<View
 						style={{
 							marginVertical: Dimensions.height * 21,
@@ -243,56 +250,8 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
 							</View>
 						</View>
 					</View>
-					<View
-						style={{
-							width: Dimensions.width * 343,
-							height: Dimensions.height * 158,
-							borderTopLeftRadius: 15,
-							borderTopRightRadius: 15,
-							backgroundColor: 'gray',
-						}}
-					></View>
-					<Shadow
-					>
-						
-						<View
 
-							style={{
-								width: Dimensions.width * 343,
-								height: Dimensions.height * 96,
-								borderBottomLeftRadius: 15,
-								borderBottomRightRadius: 15,
-								backgroundColor: 'white',
-								paddingVertical: Dimensions.height * 18,
-								paddingHorizontal: Dimensions.width * 20,
-							}}
-						>
-							<Text
-								style={{
-									color: Colors.Black,
-									fontSize: 18,
-								}}
-							>
-								Egg Salad
-							</Text>
-							<View
-								style={{
-									width: Dimensions.width * 303,
-									flexDirection: 'row',
-									alignItems: 'center',
-									justifyContent: 'space-between',
-									marginTop: Dimensions.height * 15,
-								}}
-							>
-								<Tag name='Egg' />
-								<Tag name='Egg' />
-								<Tag name='Egg' />
-								<Tag name='Egg' />
-								<Tag name='Egg' />
-								<Tag name='Egg' />
-							</View>
-						</View>
-					</Shadow>
+					<MenuItem data={menus[3]} />
 					<Pressable
 						style={({ pressed }) => ({
 							opacity: pressed ? 0.5 : 1,

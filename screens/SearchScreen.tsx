@@ -1,5 +1,12 @@
 import * as React from 'react';
-import { View, Text, Pressable, Modal, FlatList } from 'react-native';
+import {
+	View,
+	Text,
+	Pressable,
+	Modal,
+	FlatList,
+	ScrollView,
+} from 'react-native';
 import { menu, RootTabScreenProps, veganType } from '../types';
 import Dimensions from '../constants/Dimensions';
 import Colors from '../constants/Colors';
@@ -27,23 +34,23 @@ export default function SearchScreen({
 		meat: false,
 	});
 	const [modalVisible, setModalVisible] = useState(false);
-	function filterMenusByVeganType(
-		menus: menu[],
-		selectedVeganType: veganType,
-	): Array<menu> {
-		let excludedIngredients: string[] = [];
-		for (let i = 0; i < 9; i++) {
-			excludedIngredients.push(
-				Object.keys(selectedVeganType).find(
-					(key) => selectedVeganType[key] === false,
-				),
-			);
-		}
-		console.log(excludedIngredients);
-		return menus.filter((menu) =>
-			excludedIngredients.forEach((ingredient) => menu[ingredient] === true),
-		);
-	}
+	// function filterMenusByVeganType(
+	// 	menus: menu[],
+	// 	selectedVeganType: veganType,
+	// ): Array<menu> {
+	// 	let excludedIngredients: string[] = [];
+	// 	for (let i = 0; i < 9; i++) {
+	// 		excludedIngredients.push(
+	// 			Object.keys(selectedVeganType).find(
+	// 				(key) => selectedVeganType[key] === false,
+	// 			),
+	// 		);
+	// 	}
+	// 	console.log(excludedIngredients);
+	// 	return menus.filter((menu) =>
+	// 		excludedIngredients.forEach((ingredient) => menu[ingredient] === true),
+	// 	);
+	// }
 	return (
 		<>
 			<Modal animationType='fade' visible={modalVisible}>
@@ -53,7 +60,7 @@ export default function SearchScreen({
 						width: Dimensions.width * 375,
 						height: Dimensions.height * 812,
 						paddingTop: useSafeAreaInsets().top,
-						paddingBottom: useSafeAreaInsets().bottom,
+						paddingBottom: useSafeAreaInsets().bottom + Dimensions.height * 49,
 					}}
 				>
 					<View
@@ -133,7 +140,7 @@ export default function SearchScreen({
 						backgroundColor: '#F8F4F4',
 					}}
 				/>
-				<View
+				<ScrollView
 					style={{
 						width: Dimensions.width * 375,
 						backgroundColor: 'white',
@@ -150,18 +157,13 @@ export default function SearchScreen({
 						Vegan Recipies
 					</Text>
 					<FlatList
-						renderItem={(item) => (
-							<MenuItem
-								key={item.item.name}
-								name={item.item.name}
-								ingredients={item.item.ingredients}
-								date={item.item.date}
-								time={item.item.time}
-							/>
-						)}
-						data={filterMenusByVeganType(menus, veganType)}
+						renderItem={(item) => <MenuItem data={item.item} />}
+						data={menus}
+						contentContainerStyle={{
+							paddingBottom: useSafeAreaInsets().bottom + 49,
+						}}
 					/>
-				</View>
+				</ScrollView>
 			</View>
 		</>
 	);

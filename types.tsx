@@ -4,6 +4,7 @@ import {
 } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { ImageSourcePropType } from 'react-native';
 
 declare global {
 	namespace ReactNavigation {
@@ -47,6 +48,7 @@ export type menu = {
 	ingredients: Array<ingredient>;
 	date: Date;
 	time: 'breakfast' | 'launch' | 'dinner';
+	imageSource: ImageSourcePropType;
 };
 
 export type ingredient = {
