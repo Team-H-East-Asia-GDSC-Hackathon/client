@@ -7,20 +7,31 @@ import { RootTabScreenProps } from '../types';
 
 import { WeekCalendar, Calendar, CalendarProvider, ExpandableCalendar } from 'react-native-calendars';
 import { Shadow } from 'react-native-shadow-2'
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
+import * as ImagePicker from 'react-native-image-picker';
+import {DemoButton} from '../components/DemoButton';
+
 
 import LeftArrow from '../assets/left-arrow.svg';
 import RightArrow from '../assets/right-arrow.svg';
 import Add from '../assets/add.svg';
+import Camera from '../assets/camera-outline.svg';
 import Tag from '../components/Tag';
 import { useState } from 'react';
 export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [img, setImageSource] = useState("") 
 
-	const openPicker = () => {
+	const [response, setResponse] = React.useState<any>(null);
 
-	}
+  const onButtonPress = React.useCallback((type: string, options: ImagePicker.CameraOptions | ImagePicker.ImageLibraryOptions) => {
+    if (type === 'capture') {
+      ImagePicker.launchCamera(options, setResponse);
+    } else {
+      ImagePicker.launchImageLibrary(options, setResponse);
+    }
+  }, []);
+
+
 	return (
 		<>
 			<Modal animationType='fade' visible={modalVisible}>
@@ -61,20 +72,27 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
 						alignItems: "center",
 						alignContent: "center"
 						
+						
 					}}>
+						<View style={styles.buttonContainer}>
+          
+        </View>
+        
+
+        
 						<Pressable
 						style={({ pressed }) => ({
 
-							opacity: pressed ? 0 : 0,
-							width: Dimensions.width * 52,
-							height: Dimensions.width * 52,
+							opacity: pressed ? 0.5 : 1,
+							width: Dimensions.width * 60,
+							height: Dimensions.width * 60,
 							borderRadius: Dimensions.width * 52,
-
+							marginTop: Dimensions.height * 120,
 							justifyContent: 'center',
 							alignItems: 'center',
 						})}
 						onPress={() => setModalVisible(true)}>
-							<Add />
+							<Camera />
 						</Pressable>
 					</View>
 					<Text
@@ -314,3 +332,75 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
 		</>
 	);
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'aliceblue',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginVertical: 8,
+  },
+  imageContainer: {
+    marginVertical: 24,
+    alignItems: 'center',
+  },
+  image: {
+    width: 200,
+    height: 200,
+  },
+})
+
+interface Action {
+  title: string;
+  type: 'capture' | 'library';
+  options: ImagePicker.CameraOptions | ImagePicker.ImageLibraryOptions;
+}
+
+const actions: Action[] = [
+  {
+    title: 'Take Image',
+    type: 'capture',
+    options: {
+      saveToPhotos: true,
+      mediaType: 'photo',
+      includeBase64: false,
+      
+    },
+  },
+  {
+    title: 'Select Image',
+    type: 'library',
+    options: {
+      selectionLimit: 0,
+      mediaType: 'photo',
+      includeBase64: false,
+    },
+  },
+  {
+    title: 'Take Video',
+    type: 'capture',
+    options: {
+      saveToPhotos: true,
+      mediaType: 'video',
+    },
+  },
+  {
+    title: 'Select Video',
+    type: 'library',
+    options: {
+      selectionLimit: 0,
+      mediaType: 'video',
+    },
+  },
+  {
+    title: `Select Image or Video\n(mixed)`,
+    type: 'library',
+    options: {
+      selectionLimit: 0,
+      mediaType: 'mixed',
+    },
+  },
+];

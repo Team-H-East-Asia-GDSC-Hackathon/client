@@ -4,5 +4,5 @@ export default {
 	Green03: '#C8EADC',
 	Green04: '#04BA7007',
 	Black: '#1E1E1E',
-	NavBar: '#F8F8F8git '
+	NavBar: '#F8F8F8'
 };
