@@ -28,3 +28,36 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
 		BottomTabScreenProps<RootTabParamList, Screen>,
 		NativeStackScreenProps<RootStackParamList>
 	>;
+
+export type veganType = {
+	key: string;
+	name: string;
+	fruit: boolean;
+	veggies: boolean;
+	cereals: boolean;
+	dairy: boolean;
+	eggs: boolean;
+	seafood: boolean;
+	meat: boolean;
+};
+
+export type menu = {
+	key: string;
+	name: string;
+	ingredients: Array<ingredient>;
+	date: Date;
+	time: 'breakfast' | 'launch' | 'dinner';
+};
+
+export type ingredient = {
+	key: string;
+	name: string;
+	category:
+		| 'fruit'
+		| 'veggies'
+		| 'cereals'
+		| 'dairy'
+		| 'eggs'
+		| 'seafood'
+		| 'meat';
+};
